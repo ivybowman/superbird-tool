@@ -17,7 +17,7 @@ from uboot_env import read_environ
 from superbird_device import SuperbirdDevice
 from superbird_device import find_device, check_device_mode
 
-VERSION = '0.0.3'
+VERSION = '0.0.4'
 
 def convert_env_dump(env_dump:str, env_file:str):
     """ convert a dumped env partition image into a human-readable text file """
@@ -108,7 +108,7 @@ if __name__ == "__main__":
             dev.bulkcmd('env save')
     elif args.disable_avb2:
         if check_device_mode('usb-burn'):
-            print('Disabling A/B booting, forever A')
+            print('Disabling A/B booting, forever B')
             dev.bulkcmd('amlmmc env')
             dev.bulkcmd(r'setenv storeargs ${storeargs} setenv avb2 0\;')
             dev.bulkcmd('setenv initargs init=/sbin/pre-init')
@@ -119,9 +119,9 @@ if __name__ == "__main__":
             dev.bulkcmd(r'setenv initargs "${initargs} console=ttyS0,115200n8"')
             dev.bulkcmd(r'setenv initargs "${initargs} no_console_suspend"')
             dev.bulkcmd(r'setenv initargs "${initargs} earlycon=aml-uart,0xff803000"')
-            dev.bulkcmd(r'setenv initargs "${initargs} ro root=/dev/mmcblk0p14"')
-            dev.bulkcmd('setenv active_slot _a')
-            dev.bulkcmd('setenv boot_part boot_a')
+            dev.bulkcmd(r'setenv initargs "${initargs} ro root=/dev/mmcblk0p15"')
+            dev.bulkcmd('setenv active_slot _B')
+            dev.bulkcmd('setenv boot_part boot_B')
             dev.bulkcmd('env save')
     elif args.enable_burn_mode:
         if check_device_mode('usb-burn'):
